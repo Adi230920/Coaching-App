@@ -5,35 +5,31 @@ class TeacherCoursesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<String> courses = ['8th Std ICSE', '9th Std ICSE'];
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Teacher Courses'),
-        backgroundColor: Colors.blue,
-      ),
+      appBar: AppBar(title: const Text('Teacher Courses')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              padding: const EdgeInsets.all(8.0),
-              color: Colors.blue.shade100,
-              child: const Text(
-                'Manage Courses',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
+            const Text(
+              'Manage Courses',
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
             Expanded(
-              child: GridView.count(
-                crossAxisCount: 2,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-                childAspectRatio: 1,
-                children: [
-                  _buildCourseBlock(context, '8th Std ICSE'),
-                  _buildCourseBlock(context, '9th Std ICSE'),
-                ],
+              child: GridView.builder(
+                itemCount: courses.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 16,
+                  crossAxisSpacing: 16,
+                  childAspectRatio: 1,
+                ),
+                itemBuilder: (context, index) =>
+                    _buildCourseCard(context, courses[index]),
               ),
             ),
           ],
@@ -43,7 +39,7 @@ class TeacherCoursesScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCourseBlock(BuildContext context, String courseName) {
+  Widget _buildCourseCard(BuildContext context, String courseName) {
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(
@@ -52,20 +48,22 @@ class TeacherCoursesScreen extends StatelessWidget {
           arguments: courseName,
         );
       },
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.blue.shade200,
-          borderRadius: BorderRadius.circular(10),
-        ),
+      child: Card(
+        color: Colors.blue.shade300.withOpacity(0.9),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        elevation: 6,
         child: Center(
-          child: Text(
-            courseName,
-            style: const TextStyle(
-              fontSize: 16,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Text(
+              courseName,
+              style: const TextStyle(
+                fontSize: 16,
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
           ),
         ),
       ),
@@ -74,6 +72,10 @@ class TeacherCoursesScreen extends StatelessWidget {
 
   Widget _buildBottomNavBar(BuildContext context, int currentIndex) {
     return BottomNavigationBar(
+      currentIndex: currentIndex,
+      selectedItemColor: Colors.blueAccent,
+      unselectedItemColor: Colors.grey,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Courses'),
         BottomNavigationBarItem(icon: Icon(Icons.subject), label: 'Subjects'),
@@ -83,9 +85,6 @@ class TeacherCoursesScreen extends StatelessWidget {
           label: 'Content',
         ),
       ],
-      currentIndex: currentIndex,
-      selectedItemColor: Colors.blue,
-      unselectedItemColor: Colors.grey,
       onTap: (index) {
         switch (index) {
           case 0:

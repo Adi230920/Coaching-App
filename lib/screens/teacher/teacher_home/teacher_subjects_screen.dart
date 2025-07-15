@@ -6,28 +6,29 @@ class TeacherSubjectsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<String> subjects = ['Physics', 'Chemistry', 'Maths', 'Biology'];
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text('$course Subjects'),
-        backgroundColor: Colors.blue,
-      ),
+      appBar: AppBar(title: Text('$course Subjects')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: ListView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              padding: const EdgeInsets.all(8.0),
-              color: Colors.blue.shade100,
-              child: const Text(
-                'Manage Subjects',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            const Text(
+              'Manage Subjects',
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+            Expanded(
+              child: ListView.separated(
+                itemCount: subjects.length,
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 12),
+                itemBuilder: (context, index) =>
+                    _buildSubjectCard(context, subjects[index]),
               ),
             ),
-            const SizedBox(height: 20),
-            _buildSubjectBlock(context, 'Physics'),
-            _buildSubjectBlock(context, 'Chemistry'),
-            _buildSubjectBlock(context, 'Maths'),
-            _buildSubjectBlock(context, 'Biology'),
           ],
         ),
       ),
@@ -35,30 +36,28 @@ class TeacherSubjectsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSubjectBlock(BuildContext context, String subjectName) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.pushNamed(
-            context,
-            '/teacher-chapters',
-            arguments: subjectName,
-          );
-        },
-        child: Container(
-          height: 100,
-          decoration: BoxDecoration(
-            color: Colors.blue.shade200,
-            borderRadius: BorderRadius.circular(10),
-          ),
+  Widget _buildSubjectCard(BuildContext context, String subjectName) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          '/teacher-chapters',
+          arguments: subjectName,
+        );
+      },
+      child: Card(
+        color: Colors.indigo.shade400.withOpacity(0.9),
+        elevation: 5,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 24.0),
           child: Center(
             child: Text(
               subjectName,
               style: const TextStyle(
                 fontSize: 18,
                 color: Colors.white,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),
@@ -69,6 +68,10 @@ class TeacherSubjectsScreen extends StatelessWidget {
 
   Widget _buildBottomNavBar(BuildContext context, int currentIndex) {
     return BottomNavigationBar(
+      currentIndex: currentIndex,
+      selectedItemColor: Colors.blueAccent,
+      unselectedItemColor: Colors.grey,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Courses'),
         BottomNavigationBarItem(icon: Icon(Icons.subject), label: 'Subjects'),
@@ -78,9 +81,6 @@ class TeacherSubjectsScreen extends StatelessWidget {
           label: 'Content',
         ),
       ],
-      currentIndex: currentIndex,
-      selectedItemColor: Colors.blue,
-      unselectedItemColor: Colors.grey,
       onTap: (index) {
         switch (index) {
           case 0:

@@ -5,83 +5,88 @@ class StudentSignupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final darkBackground = const Color(0xFF121212);
+    final inputFillColor = const Color(0xFF1E1E1E);
+    final primaryColor = Colors.tealAccent;
+
     return Scaffold(
+      backgroundColor: darkBackground,
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         title: const Text('Student Signup'),
-        backgroundColor: Colors.green, // Customize app bar color
+        titleTextStyle: const TextStyle(
+          fontSize: 22,
+          fontWeight: FontWeight.bold,
+          color: Colors.tealAccent,
+        ),
+        centerTitle: true,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.tealAccent),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0), // Customize padding
+        padding: const EdgeInsets.all(20.0),
         child: Form(
           child: ListView(
             children: [
-              // Name Field
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Name',
-                  border: OutlineInputBorder(), // Customize border
-                ),
-                style: const TextStyle(fontSize: 16), // Customize font size
-              ),
-              const SizedBox(height: 16), // Customize spacing
-              // Email Field
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                  border: OutlineInputBorder(),
-                ),
-                style: const TextStyle(fontSize: 16),
-              ),
+              _buildInputField(label: 'Name', fillColor: inputFillColor),
               const SizedBox(height: 16),
-              // Phone No Field
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Phone No',
-                  border: OutlineInputBorder(),
-                ),
-                style: const TextStyle(fontSize: 16),
-              ),
+              _buildInputField(label: 'Email', fillColor: inputFillColor),
               const SizedBox(height: 16),
-              // Coaching Class Name Field
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Coaching Class Name',
-                  border: OutlineInputBorder(),
-                ),
-                style: const TextStyle(fontSize: 16),
-              ),
+              _buildInputField(label: 'Phone No', fillColor: inputFillColor),
               const SizedBox(height: 16),
-              // Teacher Name Field
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Teacher Name',
-                  border: OutlineInputBorder(),
-                ),
-                style: const TextStyle(fontSize: 16),
+              _buildInputField(label: 'Class/Grade', fillColor: inputFillColor),
+              const SizedBox(height: 16),
+              _buildInputField(
+                label: 'Password',
+                fillColor: inputFillColor,
+                obscure: true,
               ),
-              const SizedBox(height: 20),
-              // Submit Button
+              const SizedBox(height: 30),
               ElevatedButton(
                 onPressed: () {
-                  // Navigate to CoursesScreen (auto-login simulation)
-                  Navigator.pushNamed(context, '/courses');
+                  Navigator.pushNamed(context, '/student-courses');
                 },
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 15,
-                  ), // Customize button size
-                  backgroundColor: Colors.green, // Customize button color
+                  backgroundColor: primaryColor,
+                  foregroundColor: Colors.black,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
                 child: const Text(
-                  'Submit',
-                  style: TextStyle(
-                    fontSize: 18, // Customize font size
-                    color: Colors.white, // Customize text color
-                  ),
+                  'Sign Up',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInputField({
+    required String label,
+    required Color fillColor,
+    bool obscure = false,
+  }) {
+    return TextFormField(
+      obscureText: obscure,
+      style: const TextStyle(color: Colors.white),
+      decoration: InputDecoration(
+        labelText: label,
+        labelStyle: const TextStyle(color: Colors.tealAccent),
+        filled: true,
+        fillColor: fillColor,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.tealAccent),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.tealAccent, width: 2),
+          borderRadius: BorderRadius.circular(12),
         ),
       ),
     );

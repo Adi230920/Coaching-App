@@ -14,63 +14,12 @@ class _TeacherLoginScreenState extends State<TeacherLoginScreen> {
 
   void _login() {
     if (_formKey.currentState!.validate()) {
-      // Placeholder for login logic (e.g., API call or dummy check)
-      // Replace with your actual authentication logic
-      bool isSuccess = true; // Example: Set to true for successful login
-
+      // Dummy login logic
+      bool isSuccess = true;
       if (isSuccess) {
         Navigator.pushReplacementNamed(context, '/teacher-courses');
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Login failed. Please try again.')),
-        );
       }
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Teacher Login'),
-        backgroundColor: Colors.blue,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextFormField(
-                controller: _emailController,
-                decoration: const InputDecoration(labelText: 'Email'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _passwordController,
-                decoration: const InputDecoration(labelText: 'Password'),
-                obscureText: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(onPressed: _login, child: const Text('Login')),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 
   @override
@@ -78,5 +27,46 @@ class _TeacherLoginScreenState extends State<TeacherLoginScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Teacher Login')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            children: [
+              const SizedBox(height: 40),
+              TextFormField(
+                controller: _emailController,
+                decoration: const InputDecoration(
+                  labelText: 'Email',
+                  prefixIcon: Icon(Icons.email),
+                ),
+                validator: (value) =>
+                    value == null || value.isEmpty ? 'Enter your email' : null,
+              ),
+              const SizedBox(height: 20),
+              TextFormField(
+                controller: _passwordController,
+                obscureText: true,
+                decoration: const InputDecoration(
+                  labelText: 'Password',
+                  prefixIcon: Icon(Icons.lock),
+                ),
+                validator: (value) => value == null || value.isEmpty
+                    ? 'Enter your password'
+                    : null,
+              ),
+              const SizedBox(height: 30),
+              ElevatedButton(onPressed: _login, child: const Text('Login')),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

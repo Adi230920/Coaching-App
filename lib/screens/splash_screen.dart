@@ -1,45 +1,50 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    super.initState();
-    // Navigate to RoleSelectionScreen after 2 seconds
-    Timer(const Duration(seconds: 1), () {
+  Widget build(BuildContext context) {
+    Future.delayed(const Duration(seconds: 10), () {
       Navigator.pushReplacementNamed(context, '/role-selection');
     });
-  }
 
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, // Customize background color
+      backgroundColor: Colors.black,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Use Image.asset for the app icon
-            Image.asset(
-              'assets/icon/app_icon.png',
-              width: 100, // Customize logo width
-              height: 100, // Customize logo height
-            ),
-            const SizedBox(height: 20), // Customize spacing
-            const Text(
-              'Coaching Class App',
-              style: TextStyle(
-                fontSize: 24, // Customize font size
-                fontWeight: FontWeight.bold,
-                color: Colors.blue, // Customize text color
+            Container(
+              width: 120,
+              height: 120,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.black, // Inner box color
+                borderRadius: BorderRadius.circular(55),
+                border: Border.all(
+                  color: Colors.white, // Border color
+                  width: 1, // Border thickness
+                ),
               ),
+              child: Image.asset(
+                'assets/icon/app_icon.png',
+                fit: BoxFit.contain,
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              'Coaching App',
+              style: TextStyle(
+                fontSize: 28,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 20),
+            const CircularProgressIndicator(
+              color: Colors.green,
+              strokeWidth: 2,
             ),
           ],
         ),

@@ -6,105 +6,78 @@ class ChaptersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final backgroundColor = const Color(0xFF121212);
+    final cardColor = const Color(0xFF1E1E1E);
+    final accentColor = Colors.tealAccent;
+
     return Scaffold(
+      backgroundColor: backgroundColor,
       appBar: AppBar(
-        title: Text('$subject Chapters'),
-        backgroundColor: Colors.green, // Customize app bar color
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.tealAccent),
+        centerTitle: true,
+        title: Text(
+          '$subject Chapters',
+          style: const TextStyle(
+            color: Colors.tealAccent,
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0), // Customize padding
+        padding: const EdgeInsets.all(20.0),
         child: ListView(
           children: [
-            // Chapters Header
-            Container(
-              padding: const EdgeInsets.all(8.0), // Customize header padding
-              color: Colors.green.shade100, // Customize header color
-              child: const Text(
-                'Chapters',
-                style: TextStyle(
-                  fontSize: 20, // Customize font size
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20), // Customize spacing
-            // Chapter Blocks
-            _buildChapterBlock(context, 'Chapter 1'),
-            _buildChapterBlock(context, 'Chapter 2'),
-            _buildChapterBlock(context, 'Chapter 3'),
-            _buildChapterBlock(context, 'Chapter 4'),
-            _buildChapterBlock(context, 'Chapter 5'),
+            _buildChapterCard(context, 'Chapter 1'),
+            _buildChapterCard(context, 'Chapter 2'),
+            _buildChapterCard(context, 'Chapter 3'),
+            _buildChapterCard(context, 'Chapter 4'),
+            _buildChapterCard(context, 'Chapter 5'),
           ],
         ),
       ),
-      bottomNavigationBar: _buildBottomNavBar(context, 2),
     );
   }
 
-  Widget _buildChapterBlock(BuildContext context, String chapterName) {
+  Widget _buildChapterCard(BuildContext context, String chapterName) {
     return Padding(
-      padding: const EdgeInsets.only(
-        bottom: 16.0,
-      ), // Customize vertical spacing
+      padding: const EdgeInsets.only(bottom: 16.0),
       child: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, '/content', arguments: chapterName);
+          Navigator.pushNamed(
+            context,
+            '/student-content',
+            arguments: chapterName,
+          );
         },
         child: Container(
-          height: 80, // Customize block height
+          height: 90,
           decoration: BoxDecoration(
-            color: Colors.green.shade200, // Customize block color
-            borderRadius: BorderRadius.circular(10), // Customize border radius
+            color: const Color(0xFF1E1E1E),
+            borderRadius: BorderRadius.circular(15),
+            border: Border.all(color: Colors.tealAccent.withOpacity(0.4)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.tealAccent.withOpacity(0.1),
+                blurRadius: 6,
+                offset: const Offset(0, 3),
+              ),
+            ],
           ),
           child: Center(
             child: Text(
               chapterName,
               style: const TextStyle(
-                fontSize: 16, // Customize font size
-                color: Colors.white, // Customize text color
-                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildBottomNavBar(BuildContext context, int currentIndex) {
-    return BottomNavigationBar(
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Courses'),
-        BottomNavigationBarItem(icon: Icon(Icons.subject), label: 'Subjects'),
-        BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Chapters'),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.content_paste),
-          label: 'Content',
-        ),
-      ],
-      currentIndex: currentIndex,
-      selectedItemColor: Colors.green, // Customize selected item color
-      unselectedItemColor: Colors.grey, // Customize unselected item color
-      onTap: (index) {
-        switch (index) {
-          case 0:
-            Navigator.pushNamed(context, '/courses');
-            break;
-          case 1:
-            Navigator.pushNamed(
-              context,
-              '/subjects',
-              arguments: '8th Std ICSE',
-            );
-            break;
-          case 2:
-            Navigator.pushNamed(context, '/chapters', arguments: 'Physics');
-            break;
-          case 3:
-            Navigator.pushNamed(context, '/content', arguments: 'Chapter 1');
-            break;
-        }
-      },
     );
   }
 }

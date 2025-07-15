@@ -6,28 +6,34 @@ class TeacherContentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<String> contentTypes = [
+      'Study Material',
+      'Notes',
+      'PPTs',
+      'Tests',
+    ];
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text('$chapter Content'),
-        backgroundColor: Colors.blue,
-      ),
+      appBar: AppBar(title: Text('$chapter Content')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: ListView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              padding: const EdgeInsets.all(8.0),
-              color: Colors.blue.shade100,
-              child: const Text(
-                'Manage Content',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            const Text(
+              'Manage Content',
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+            Expanded(
+              child: ListView.separated(
+                itemCount: contentTypes.length,
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 12),
+                itemBuilder: (context, index) =>
+                    _buildContentCard(context, contentTypes[index]),
               ),
             ),
-            const SizedBox(height: 20),
-            _buildContentBlock(context, 'Study Material'),
-            _buildContentBlock(context, 'Notes'),
-            _buildContentBlock(context, 'PPTs'),
-            _buildContentBlock(context, 'Tests'),
           ],
         ),
       ),
@@ -35,26 +41,24 @@ class TeacherContentScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildContentBlock(BuildContext context, String contentType) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0),
-      child: GestureDetector(
-        onTap: () {
-          // Placeholder for content management action (e.g., edit or upload)
-        },
-        child: Container(
-          height: 80,
-          decoration: BoxDecoration(
-            color: Colors.blue.shade200,
-            borderRadius: BorderRadius.circular(10),
-          ),
+  Widget _buildContentCard(BuildContext context, String contentType) {
+    return GestureDetector(
+      onTap: () {
+        // TODO: Navigate or trigger content action
+      },
+      child: Card(
+        color: Colors.teal.shade400.withOpacity(0.9),
+        elevation: 5,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 24.0),
           child: Center(
             child: Text(
               contentType,
               style: const TextStyle(
-                fontSize: 16,
+                fontSize: 18,
                 color: Colors.white,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),
@@ -65,6 +69,10 @@ class TeacherContentScreen extends StatelessWidget {
 
   Widget _buildBottomNavBar(BuildContext context, int currentIndex) {
     return BottomNavigationBar(
+      currentIndex: currentIndex,
+      selectedItemColor: Colors.blueAccent,
+      unselectedItemColor: Colors.grey,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Courses'),
         BottomNavigationBarItem(icon: Icon(Icons.subject), label: 'Subjects'),
@@ -74,9 +82,6 @@ class TeacherContentScreen extends StatelessWidget {
           label: 'Content',
         ),
       ],
-      currentIndex: currentIndex,
-      selectedItemColor: Colors.blue,
-      unselectedItemColor: Colors.grey,
       onTap: (index) {
         switch (index) {
           case 0:
