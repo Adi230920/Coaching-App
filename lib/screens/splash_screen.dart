@@ -28,15 +28,15 @@ class SplashScreen extends StatelessWidget {
                 ),
               ),
               child: Image.asset(
-                'assets/icon/app_icon.png',
+                'assets/icon/app_icon_new.png',
                 fit: BoxFit.contain,
               ),
             ),
             const SizedBox(height: 20),
             const Text(
-              'Coaching App',
+              'Coachify',
               style: TextStyle(
-                fontSize: 28,
+                fontSize: 30,
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),

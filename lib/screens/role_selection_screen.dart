@@ -15,17 +15,17 @@ class RoleSelectionScreen extends StatelessWidget {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.all(10.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Icon(Icons.person_pin, size: 100, color: Colors.blueAccent),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               const Text(
-                'Who Are You ?',
+                '  Please Select Your Role',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 26,
+                  fontSize: 25,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
